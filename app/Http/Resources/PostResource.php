@@ -21,6 +21,7 @@ class PostResource extends JsonResource
             'author_info' => $this->User,
             'reaction_count' => $this->ReactionCount,
             'comment_count' => $this->CommentCount,
+            'user_liked' => $this->UserLiked,
             'comments' => CommentResource::collection($this->Comment),
         ];
     }
