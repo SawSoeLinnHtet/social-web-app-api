@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\CommentResource;
 
 class PostResource extends JsonResource
 {
@@ -20,7 +21,7 @@ class PostResource extends JsonResource
             'author_info' => $this->User,
             'reaction_count' => $this->ReactionCount,
             'comment_count' => $this->CommentCount,
-            'comments' => $this->Comment,
+            'comments' => CommentResource::collection($this->Comment),
         ];
     }
 }

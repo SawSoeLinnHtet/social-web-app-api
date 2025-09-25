@@ -29,4 +29,44 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function Posts()
+    {
+        return $this->hasMany(Post::class);
+    }
+
+    public function Reactions()
+    {
+        return $this->hasMany(Reaction::class);
+    }
+
+    public function Comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
+    public function getPostCountAttribute()
+    {
+        return $this->Posts()->count();
+    }
+
+    public function reactionsOnMyPosts()
+    {
+        return Reaction::whereIn('post_id', $this->posts()->pluck('id'));
+    }
+
+    public function commentsOnMyPosts()
+    {
+        return Comment::whereIn('post_id', $this->posts()->pluck('id'));
+    }
+
+    public function getReactionCountAttribute()
+    {
+        return $this->reactionsOnMyPosts()->count();
+    }
+
+    public function getCommentCountAttribute()
+    {
+        return $this->commentsOnMyPosts()->count();
+    }
 }
